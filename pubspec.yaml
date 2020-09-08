@@ -78,6 +78,7 @@ flutter:
     - assets/peinados/peinado_B/
     - assets/peinados/peinado_C/
     - assets/peinados/peinado_D/
+    - assets/peinados/peinado_E/
     - assets/playeras/
     - assets/mujer/
     - assets/mujer/bocas/
@@ -95,6 +96,7 @@ flutter:
     - assets/mujer/ojos/
     - assets/mujer/ojos/ojos_A/
     - assets/mujer/ojos/ojos_B/
+    - assets/mujer/ojos/ojos_C/
     - assets/mujer/orejas/
     - assets/mujer/orejas/orejas_A/
     - assets/mujer/orejas/orejas_B/
@@ -109,6 +111,7 @@ flutter:
     - assets/mujer/peinados/peinado_E/
     - assets/mujer/playeras/
     - assets/peinados_especiales/
+    - assets/peinados_chidos_mujeres/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

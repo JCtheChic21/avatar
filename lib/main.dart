@@ -43,6 +43,12 @@ class _MyHomePageState extends State<MyHomePage> {
   String _bocaAvatarActual;
   String _barbaAvatarActual;
   String _playeraAvatarActual;
+  // Indices para tamaño el Avatar.
+  double _indiceTamanoHorizontal;
+  double _indiceTamanoVertical;
+  // Indices para tamaño de la imagen proximamente.
+  double _indiceTamanoProximamenteHorizontal;
+  double _indiceTamanoProximamenteVertical;
   // Indices para editar el Avatar.
   int _indiceDeColorDePielAvatarActual;
   int _indiceColorDeTroncoAvatarActual;
@@ -122,6 +128,8 @@ class _MyHomePageState extends State<MyHomePage> {
   // Indices de tipos de boca.
   int _indiceTipoDeBocaUno;
   int _indiceTipoDeBocaDos;
+  int _indiceTipoDeBocaTres;
+  int _indiceTipoDeBocaCuatro;
   // Indices de tipos de vellos faciales.
   int _indiceTipoDeBarbaUno;
   int _indiceTipoDeBarbaDos;
@@ -175,6 +183,12 @@ class _MyHomePageState extends State<MyHomePage> {
     _bocaAvatarActual = 'assets/inicial/Boca_A.png';
     _barbaAvatarActual = 'assets/inicial/Sin_Fondo.png';
     _playeraAvatarActual = 'assets/inicial/Playera_A.png';
+    // Inicialización de indices tamaño de avatar.
+    _indiceTamanoHorizontal = 300;
+    _indiceTamanoVertical = 300;
+    // Inicialización de indices tamaño de la imagen proximamente.
+    _indiceTamanoProximamenteHorizontal = 120.0;
+    _indiceTamanoProximamenteVertical = 120.0;
     // Inicialización de indices.
     _indiceDeColorDePielAvatarActual = 1;
     _indiceColorDeTroncoAvatarActual = 1;
@@ -251,9 +265,11 @@ class _MyHomePageState extends State<MyHomePage> {
     _indiceTipoDeNarizUno = 1;
     _indiceTipoDeNarizDos = 2;
     _indiceTipoDeNarizTres = 3;
-    // Inicialización de tipos de bocas (1 y 2).
+    // Inicialización de tipos de bocas (1, 2, 3 y 4).
     _indiceTipoDeBocaUno = 1;
     _indiceTipoDeBocaDos = 2;
+    _indiceTipoDeBocaTres = 3;
+    _indiceTipoDeBocaCuatro = 4;
     // Inicialización de tipos de vellos faciales (1, 2, 3, 4, 5 y 6).
     _indiceTipoDeBarbaUno = 1;
     _indiceTipoDeBarbaDos = 2;
@@ -322,7 +338,6 @@ class _MyHomePageState extends State<MyHomePage> {
       _bocaAvatarActual = boca;
       _barbaAvatarActual = barba;
       _playeraAvatarActual = playera;
-
     });
   }
 
@@ -452,4242 +467,4339 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            // Barra de usuario / guardar.
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Image.asset(
-                      'assets/icon-cracks_A.png',
-                      width: 50.0,
-                      height: 50.0,
-                      fit: BoxFit.cover,
+      body: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Image.asset(
+                    'assets/icon-cracks_A.png',
+                    width: 50.0,
+                    height: 50.0,
+                    fit: BoxFit.cover,
+                  ),
+                  SizedBox(
+                    width: 12.0,
+                  ),
+                  Text(
+                    'Juninho',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
                     ),
-                    SizedBox(
-                      width: 12.0,
-                    ),
-                    Text(
-                      'Juninho',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                RaisedButton(
-                  onPressed: () {
-                    // Save Avatar
-                  },
-                  textColor: Colors.black,
-                  padding: const EdgeInsets.all(0.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(colors: <Color>[
-                        Color(0xFFFFFFFF),
-                        Color(0xFFFFFFFF),
-                        Color(0xFFFFFFFF),
-                      ]),
-                    ),
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text(
-                      'Guardar',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  ),
+                ],
+              ),
+              RaisedButton(
+                onPressed: () {
+                  // Save Avatar
+                },
+                textColor: Colors.black,
+                padding: const EdgeInsets.all(0.0),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(colors: <Color>[
+                      Color(0xFFFFFFFF),
+                      Color(0xFFFFFFFF),
+                      Color(0xFFFFFFFF),
+                    ]),
+                  ),
+                  padding: const EdgeInsets.all(10.0),
+                  child: const Text(
+                    'Guardar',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-              ],
-            ),
-            // Avatar en edición.
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Stack(
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Stack(
+                children: <Widget>[
+                  // Tipo de jugador
+                  Positioned(
+                    child: Image.asset(
+                      '$_jugadorActual',
+                      height: _indiceTamanoVertical,
+                      width: _indiceTamanoHorizontal,
+                    ),
+                  ),
+                  // Tipo de tronco
+                  Positioned(
+                    child: Image.asset(
+                      '$_troncoAvatarActual',
+                      height: _indiceTamanoVertical,
+                      width: _indiceTamanoHorizontal,
+                    ),
+                  ),
+                  // Tipo de cara
+                  Positioned(
+                    child: Image.asset(
+                      '$_caraAvatarActual',
+                      height: _indiceTamanoVertical,
+                      width: _indiceTamanoHorizontal,
+                    ),
+                  ),
+                  // Tipo de orejas
+                  Positioned(
+                    child: Image.asset(
+                      '$_orejasAvatarActual',
+                      height: _indiceTamanoVertical,
+                      width: _indiceTamanoHorizontal,
+                    ),
+                  ),
+                  // Tipo de cejas
+                  Positioned(
+                    child: Image.asset(
+                      '$_cejaAvatarActual',
+                      height: _indiceTamanoVertical,
+                      width: _indiceTamanoHorizontal,
+                    ),
+                  ),
+                  // Tipo de cabello
+                  Positioned(
+                    child: Image.asset(
+                      '$_cabelloAvatarActual',
+                      height: _indiceTamanoVertical,
+                      width: _indiceTamanoHorizontal,
+                    ),
+                  ),
+                  // Tipo de ojos
+                  Positioned(
+                    child: Image.asset(
+                      '$_ojosAvatarActual',
+                      height: _indiceTamanoVertical,
+                      width: _indiceTamanoHorizontal,
+                    ),
+                  ),
+                  // Tipo de nariz
+                  Positioned(
+                    child: Image.asset(
+                      '$_narizAvatarActual',
+                      height: _indiceTamanoVertical,
+                      width: _indiceTamanoHorizontal,
+                    ),
+                  ),
+                  // Tipo de boca
+                  Positioned(
+                    child: Image.asset(
+                      '$_bocaAvatarActual',
+                      height: _indiceTamanoVertical,
+                      width: _indiceTamanoHorizontal,
+                    ),
+                  ),
+                  // Tipo de vello facial
+                  Positioned(
+                    child: Image.asset(
+                      '$_barbaAvatarActual',
+                      height: _indiceTamanoVertical,
+                      width: _indiceTamanoHorizontal,
+                    ),
+                  ),
+                  // Tipo de playera
+                  Positioned(
+                    child: Image.asset(
+                      '$_playeraAvatarActual',
+                      height: _indiceTamanoVertical,
+                      width: _indiceTamanoHorizontal,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              SizedBox(
+                height: MediaQuery.of(context).size.height - 430,
+                width: MediaQuery.of(context).size.width,
+                child: PageView(
                   children: <Widget>[
-                    // Tipo de jugador
-                    Positioned(
-                      child: Image.asset(
-                        '$_jugadorActual',
-                        width: 250,
-                        height: 250,
-                      ),
-                    ),
-                    // Tipo de tronco
-                    Positioned(
-                      child: Image.asset(
-                        '$_troncoAvatarActual',
-                        width: 250,
-                        height: 250,
-                      ),
-                    ),
-                    // Tipo de cara
-                    Positioned(
-                      child: Image.asset(
-                        '$_caraAvatarActual',
-                        width: 250,
-                        height: 250,
-                      ),
-                    ),
-                    // Tipo de orejas
-                    Positioned(
-                      child: Image.asset(
-                        '$_orejasAvatarActual',
-                        width: 250,
-                        height: 250,
-                      ),
-                    ),
-                    // Tipo de cejas
-                    Positioned(
-                      child: Image.asset(
-                        '$_cejaAvatarActual',
-                        width: 250,
-                        height: 250,
-                      ),
-                    ),
-                    // Tipo de cabello
-                    Positioned(
-                      child: Image.asset(
-                        '$_cabelloAvatarActual',
-                        width: 250,
-                        height: 250,
-                      ),
-                    ),
-                    // Tipo de ojos
-                    Positioned(
-                      child: Image.asset(
-                        '$_ojosAvatarActual',
-                        width: 250,
-                        height: 250,
-                      ),
-                    ),
-                    // Tipo de nariz
-                    Positioned(
-                      child: Image.asset(
-                        '$_narizAvatarActual',
-                        width: 250,
-                        height: 250,
-                      ),
-                    ),
-                    // Tipo de boca
-                    Positioned(
-                      child: Image.asset(
-                        '$_bocaAvatarActual',
-                        width: 250,
-                        height: 250,
-                      ),
-                    ),
-                    // Tipo de vello facial
-                    Positioned(
-                      child: Image.asset(
-                        '$_barbaAvatarActual',
-                        width: 250,
-                        height: 250,
-                      ),
-                    ),
-                    // Tipo de playera
-                    Positioned(
-                      child: Image.asset(
-                        '$_playeraAvatarActual',
-                        width: 250,
-                        height: 250,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            // Selecciones.
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        alignment: Alignment.center,
-                        //width: 350.00,
-                        width: 400.00,
-                        //height: 250.00,
-                        height: 600.00,
-                        child: PageView(
+                    // Selección de jugadores.
+                    ListView(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            // Página de selección de jugadores.
-
-                            // Página de selección de género.
-                            ListView(
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Icon(Icons.chevron_left),
-                                    Text(
-                                      'Selecciona tu género',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Icon(Icons.chevron_right),
-                                  ],
-                                ),
-                                // Tipos de Cara.
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            1,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraUno,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              1,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraUno,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarGenero(avatar.genero,
-                                              avatar.indiceTipoDeCara,
-                                              avatar.tronco,
-                                              avatar.cara,
-                                              avatar.orejas,
-                                              avatar.cabello,
-                                              avatar.cejas,
-                                              avatar.ojos,
-                                              avatar.nariz,
-                                              avatar.boca,
-                                              avatar.barba,
-                                              avatar.playera);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            2,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraUno,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              2,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraUno,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarGenero(avatar.genero,
-                                              avatar.indiceTipoDeCara,
-                                              avatar.tronco,
-                                              avatar.cara,
-                                              avatar.orejas,
-                                              avatar.cabello,
-                                              avatar.cejas,
-                                              avatar.ojos,
-                                              avatar.nariz,
-                                              avatar.boca,
-                                              avatar.barba,
-                                              avatar.playera);
-                                        }),
-                                    GestureDetector(
-                                      child: Card(
-                                        child: Image.asset(
-                                          'assets/inicial/Coming_Soon.png',
-                                          width: 100.0,
-                                          height: 100.0,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
+                            Icon(Icons.chevron_left),
+                            Text(
+                              'Elige a un Crack',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            // Página de selección del tipo de cara.
-                            ListView(
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Icon(Icons.chevron_left),
-                                    Text(
-                                      'Tipo de cara',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Icon(Icons.chevron_right),
-                                  ],
+                            Icon(Icons.chevron_right),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            GestureDetector(
+                              child: Card(
+                                child: Image.asset(
+                                  'assets/inicial/Coming_Soon.png',
+                                  height: _indiceTamanoProximamenteVertical,
+                                  width: _indiceTamanoProximamenteHorizontal,
                                 ),
-                                // Tipos de Cara.
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraUno,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraUno,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarCara(
-                                              avatar.indiceTipoDeCara,
-                                              avatar.tronco,
-                                              avatar.cara,
-                                              avatar.orejas);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraDos,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraDos,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarCara(
-                                              avatar.indiceTipoDeCara,
-                                              avatar.tronco,
-                                              avatar.cara,
-                                              avatar.orejas);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraTres,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraTres,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarCara(
-                                              avatar.indiceTipoDeCara,
-                                              avatar.tronco,
-                                              avatar.cara,
-                                              avatar.orejas);
-                                        })
-                                  ],
-                                ),
-                              ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    // Selección de género.
+                    ListView(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Icon(Icons.chevron_left),
+                            Text(
+                              'Selecciona tu género',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            // Página de selección del color de piel.
-                            ListView(
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Icon(Icons.chevron_left),
-                                    Text(
-                                      'Color de piel',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Icon(Icons.chevron_right),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielUno,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceDeColorDeOrejasUno,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielUno,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceDeColorDeOrejasUno,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDePiel(
-                                              avatar.indiceDeColorDePiel,
-                                              avatar.indiceColorDeTronco,
-                                              avatar.indiceColorDeCara,
-                                              avatar.indiceTipoDeOrejas,
-                                              avatar.indiceColorDeOrejas,
-                                              avatar.tronco,
-                                              avatar.cara,
-                                              avatar.orejas);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielDos,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceDeColorDeOrejasDos,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielDos,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceDeColorDeOrejasDos,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDePiel(
-                                              avatar.indiceDeColorDePiel,
-                                              avatar.indiceColorDeTronco,
-                                              avatar.indiceColorDeCara,
-                                              avatar.indiceTipoDeOrejas,
-                                              avatar.indiceColorDeOrejas,
-                                              avatar.tronco,
-                                              avatar.cara,
-                                              avatar.orejas);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielTres,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceDeColorDeOrejasTres,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielTres,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceDeColorDeOrejasTres,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDePiel(
-                                              avatar.indiceDeColorDePiel,
-                                              avatar.indiceColorDeTronco,
-                                              avatar.indiceColorDeCara,
-                                              avatar.indiceTipoDeOrejas,
-                                              avatar.indiceColorDeOrejas,
-                                              avatar.tronco,
-                                              avatar.cara,
-                                              avatar.orejas);
-                                        }),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielCuatro,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceDeColorDeOrejasCuatro,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielCuatro,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceDeColorDeOrejasCuatro,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDePiel(
-                                              avatar.indiceDeColorDePiel,
-                                              avatar.indiceColorDeTronco,
-                                              avatar.indiceColorDeCara,
-                                              avatar.indiceTipoDeOrejas,
-                                              avatar.indiceColorDeOrejas,
-                                              avatar.tronco,
-                                              avatar.cara,
-                                              avatar.orejas);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielCinco,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceDeColorDeOrejasCinco,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielCinco,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceDeColorDeOrejasCinco,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDePiel(
-                                              avatar.indiceDeColorDePiel,
-                                              avatar.indiceColorDeTronco,
-                                              avatar.indiceColorDeCara,
-                                              avatar.indiceTipoDeOrejas,
-                                              avatar.indiceColorDeOrejas,
-                                              avatar.tronco,
-                                              avatar.cara,
-                                              avatar.orejas);
-                                        }),
-                                    GestureDetector(
-                                      child: Card(
-                                        child: Image.asset(
-                                          'assets/inicial/Coming_Soon.png',
-                                          width: 100.0,
-                                          height: 100.0,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
+                            Icon(Icons.chevron_right),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    1,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraUno,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      1,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraUno,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarGenero(
+                                      avatar.genero,
+                                      avatar.indiceTipoDeCara,
+                                      avatar.tronco,
+                                      avatar.cara,
+                                      avatar.orejas,
+                                      avatar.cabello,
+                                      avatar.cejas,
+                                      avatar.ojos,
+                                      avatar.nariz,
+                                      avatar.boca,
+                                      avatar.barba,
+                                      avatar.playera);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    2,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraUno,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      2,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraUno,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarGenero(
+                                      avatar.genero,
+                                      avatar.indiceTipoDeCara,
+                                      avatar.tronco,
+                                      avatar.cara,
+                                      avatar.orejas,
+                                      avatar.cabello,
+                                      avatar.cejas,
+                                      avatar.ojos,
+                                      avatar.nariz,
+                                      avatar.boca,
+                                      avatar.barba,
+                                      avatar.playera);
+                                }),
+                          ],
+                        ),
+                      ],
+                    ),
+                    // Selección del tipo de cara.
+                    ListView(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Icon(Icons.chevron_left),
+                            Text(
+                              'Tipo de cara',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            // Página de selección del tipo de orejas.
-                            ListView(
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Icon(Icons.chevron_left),
-                                    Text(
-                                      'Tipo de orejas',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Icon(Icons.chevron_right),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasUno,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeOrejas(
-                                              avatar.indiceTipoDeOrejas,
-                                              avatar.orejas);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasDos,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasDos,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeOrejas(
-                                              avatar.indiceTipoDeOrejas,
-                                              avatar.orejas);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasTres,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasTres,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeOrejas(
-                                              avatar.indiceTipoDeOrejas,
-                                              avatar.orejas);
-                                        })
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasCuatro,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasCuatro,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeOrejas(
-                                              avatar.indiceTipoDeOrejas,
-                                              avatar.orejas);
-                                        }),
-                                    GestureDetector(
-                                      child: Card(
-                                        child: Image.asset(
-                                          'assets/inicial/Coming_Soon.png',
-                                          width: 100.0,
-                                          height: 100.0,
-                                        ),
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      child: Card(
-                                        child: Image.asset(
-                                          'assets/inicial/Coming_Soon.png',
-                                          width: 100.0,
-                                          height: 100.0,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
+                            Icon(Icons.chevron_right),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraUno,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraUno,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarCara(
+                                      avatar.indiceTipoDeCara,
+                                      avatar.tronco,
+                                      avatar.cara,
+                                      avatar.orejas);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraDos,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraDos,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarCara(
+                                      avatar.indiceTipoDeCara,
+                                      avatar.tronco,
+                                      avatar.cara,
+                                      avatar.orejas);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraTres,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraTres,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarCara(
+                                      avatar.indiceTipoDeCara,
+                                      avatar.tronco,
+                                      avatar.cara,
+                                      avatar.orejas);
+                                })
+                          ],
+                        ),
+                      ],
+                    ),
+                    // Selección del color de piel.
+                    ListView(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Icon(Icons.chevron_left),
+                            Text(
+                              'Color de piel',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            // Página de selección del tipo de cabello.
-                            ListView(
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Icon(Icons.chevron_left),
-                                    Text(
-                                      'Tipo de cabello',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Icon(Icons.chevron_right),
-                                  ],
+                            Icon(Icons.chevron_right),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielUno,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceDeColorDeOrejasUno,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielUno,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceDeColorDeOrejasUno,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDePiel(
+                                      avatar.indiceDeColorDePiel,
+                                      avatar.indiceColorDeTronco,
+                                      avatar.indiceColorDeCara,
+                                      avatar.indiceTipoDeOrejas,
+                                      avatar.indiceColorDeOrejas,
+                                      avatar.tronco,
+                                      avatar.cara,
+                                      avatar.orejas);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielDos,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceDeColorDeOrejasDos,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielDos,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceDeColorDeOrejasDos,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDePiel(
+                                      avatar.indiceDeColorDePiel,
+                                      avatar.indiceColorDeTronco,
+                                      avatar.indiceColorDeCara,
+                                      avatar.indiceTipoDeOrejas,
+                                      avatar.indiceColorDeOrejas,
+                                      avatar.tronco,
+                                      avatar.cara,
+                                      avatar.orejas);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielTres,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceDeColorDeOrejasTres,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielTres,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceDeColorDeOrejasTres,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDePiel(
+                                      avatar.indiceDeColorDePiel,
+                                      avatar.indiceColorDeTronco,
+                                      avatar.indiceColorDeCara,
+                                      avatar.indiceTipoDeOrejas,
+                                      avatar.indiceColorDeOrejas,
+                                      avatar.tronco,
+                                      avatar.cara,
+                                      avatar.orejas);
+                                }),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielCuatro,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceDeColorDeOrejasCuatro,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielCuatro,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceDeColorDeOrejasCuatro,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDePiel(
+                                      avatar.indiceDeColorDePiel,
+                                      avatar.indiceColorDeTronco,
+                                      avatar.indiceColorDeCara,
+                                      avatar.indiceTipoDeOrejas,
+                                      avatar.indiceColorDeOrejas,
+                                      avatar.tronco,
+                                      avatar.cara,
+                                      avatar.orejas);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielCinco,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceDeColorDeOrejasCinco,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielCinco,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceDeColorDeOrejasCinco,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDePiel(
+                                      avatar.indiceDeColorDePiel,
+                                      avatar.indiceColorDeTronco,
+                                      avatar.indiceColorDeCara,
+                                      avatar.indiceTipoDeOrejas,
+                                      avatar.indiceColorDeOrejas,
+                                      avatar.tronco,
+                                      avatar.cara,
+                                      avatar.orejas);
+                                }),
+                            GestureDetector(
+                              child: Card(
+                                child: Image.asset(
+                                  'assets/inicial/Coming_Soon.png',
+                                  height: _indiceTamanoProximamenteVertical,
+                                  width: _indiceTamanoProximamenteHorizontal,
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloUno,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloUno,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloDos,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloDos,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloTres,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloTres,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                  ],
-                                ),
-                                // Peinados especiales [6]
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloCuatro,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloCuatro,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloCinco,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloCinco,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloSeis,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloSeis,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                  ],
-                                ),
-                                // Peinados especiales [7, 8 y 9]
-                                Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloSiete,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloSiete,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloOcho,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloOcho,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloNueve,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloNueve,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                  ],
-                                ),
-                                // Peinados especiales [10, 11 y 12]
-                                Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloDiez,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloDiez,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloOnce,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloOnce,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloDoce,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloDoce,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                  ],
-                                ),
-                                // Peinados especiales [13, 14 y 15]
-                                Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloTrece,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloTrece,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloCatorce,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloCatorce,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloQuince,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloQuince,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                  ],
-                                ),
-                                // Peinados especiales [16, 17 y 18]
-                                Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabello16,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabello16,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabello17,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabello17,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabello18,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabello18,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                  ],
-                                ),
-                                // Peinados especiales [19, 20 y 21]
-                                Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabello19,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabello19,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabello20,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabello20,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabello21,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabello21,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                  ],
-                                ),
-                                // Peinados especiales [22]
-                                Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabello22,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasUno,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabello22,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCabello(
-                                              avatar.indiceTipoDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                    GestureDetector(
-                                      child: Card(
-                                        child: Image.asset(
-                                          'assets/inicial/Coming_Soon.png',
-                                          width: 100.0,
-                                          height: 100.0,
-                                        ),
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      child: Card(
-                                        child: Image.asset(
-                                          'assets/inicial/Coming_Soon.png',
-                                          width: 100.0,
-                                          height: 100.0,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    // Selección del tipo de orejas.
+                    ListView(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Icon(Icons.chevron_left),
+                            Text(
+                              'Tipo de orejas',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            // Página de selección del color de cabello.
-                            ListView(
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Icon(Icons.chevron_left),
-                                    Text(
-                                      'Color de cabello',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Icon(Icons.chevron_right),
-                                  ],
+                            Icon(Icons.chevron_right),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasUno,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeOrejas(
+                                      avatar.indiceTipoDeOrejas, avatar.orejas);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasDos,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasDos,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeOrejas(
+                                      avatar.indiceTipoDeOrejas, avatar.orejas);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasTres,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasTres,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeOrejas(
+                                      avatar.indiceTipoDeOrejas, avatar.orejas);
+                                })
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasCuatro,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasCuatro,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeOrejas(
+                                      avatar.indiceTipoDeOrejas, avatar.orejas);
+                                }),
+                            GestureDetector(
+                              child: Card(
+                                child: Image.asset(
+                                  'assets/inicial/Coming_Soon.png',
+                                  height: _indiceTamanoProximamenteVertical,
+                                  width: _indiceTamanoProximamenteHorizontal,
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloUno,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloUno,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDeCabello(
-                                              avatar._indiceColorDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloDos,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloDos,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDeCabello(
-                                              avatar._indiceColorDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloTres,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloTres,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDeCabello(
-                                              avatar._indiceColorDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloCuatro,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloCuatro,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDeCabello(
-                                              avatar._indiceColorDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloCinco,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloCinco,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDeCabello(
-                                              avatar._indiceColorDeCabello,
-                                              avatar.cabello);
-                                        }),
-                                    GestureDetector(
-                                      child: Card(
-                                        child: Image.asset(
-                                          'assets/inicial/Coming_Soon.png',
-                                          width: 100.0,
-                                          height: 100.0,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
+                              ),
                             ),
-                            // Página de selección del tipo de cejas.
-                            ListView(
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Icon(Icons.chevron_left),
-                                    Text(
-                                      'Tipo de cejas',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Icon(Icons.chevron_right),
-                                  ],
+                            GestureDetector(
+                              child: Card(
+                                child: Image.asset(
+                                  'assets/inicial/Coming_Soon.png',
+                                  height: _indiceTamanoProximamenteVertical,
+                                  width: _indiceTamanoProximamenteHorizontal,
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasUno,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasUno,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCejas(
-                                              avatar._indiceTipoDeCejas,
-                                              avatar.cejas);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasDos,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasDos,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCejas(
-                                              avatar._indiceTipoDeCejas,
-                                              avatar.cejas);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasTres,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasTres,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCejas(
-                                              avatar._indiceTipoDeCejas,
-                                              avatar.cejas);
-                                        }),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasCuatro,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasCuatro,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCejas(
-                                              avatar._indiceTipoDeCejas,
-                                              avatar.cejas);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasCinco,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasCinco,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeCejas(
-                                              avatar._indiceTipoDeCejas,
-                                              avatar.cejas);
-                                        }),
-                                    GestureDetector(
-                                      child: Card(
-                                        child: Image.asset(
-                                          'assets/inicial/Coming_Soon.png',
-                                          width: 100.0,
-                                          height: 100.0,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    // Selección del tipo de cabello.
+                    ListView(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Icon(Icons.chevron_left),
+                            Text(
+                              'Tipo de cabello',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            // Página de selección del color de cejas.
-                            ListView(
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Icon(Icons.chevron_left),
-                                    Text(
-                                      'Color de cejas',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Icon(Icons.chevron_right),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasUno,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasUno,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDeCejas(
-                                              avatar._indiceColorDeCejas,
-                                              avatar.cejas);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasDos,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasDos,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDeCejas(
-                                              avatar._indiceColorDeCejas,
-                                              avatar.cejas);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasTres,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasTres,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDeCejas(
-                                              avatar._indiceColorDeCejas,
-                                              avatar.cejas);
-                                        }),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasCuatro,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasCuatro,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDeCejas(
-                                              avatar._indiceColorDeCejas,
-                                              avatar.cejas);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasCinco,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasCinco,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDeCejas(
-                                              avatar._indiceColorDeCejas,
-                                              avatar.cejas);
-                                        }),
-                                    GestureDetector(
-                                      child: Card(
-                                        child: Image.asset(
-                                          'assets/inicial/Coming_Soon.png',
-                                          width: 100.0,
-                                          height: 100.0,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
+                            Icon(Icons.chevron_right),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloUno,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloUno,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloDos,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloDos,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloTres,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloTres,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloCuatro,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloCuatro,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloCinco,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloCinco,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloSeis,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloSeis,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                          ],
+                        ),
+                      ],
+                    ),
+                    // Selección del color de cabello.
+                    ListView(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Icon(Icons.chevron_left),
+                            Text(
+                              'Color de cabello',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            // Página de selección del tipo de ojos.
-                            ListView(
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Icon(Icons.chevron_left),
-                                    Text(
-                                      'Tipo de ojos',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Icon(Icons.chevron_right),
-                                  ],
+                            Icon(Icons.chevron_right),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloUno,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloUno,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDeCabello(
+                                      avatar._indiceColorDeCabello,
+                                      avatar.cabello);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloDos,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloDos,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDeCabello(
+                                      avatar._indiceColorDeCabello,
+                                      avatar.cabello);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloTres,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloTres,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDeCabello(
+                                      avatar._indiceColorDeCabello,
+                                      avatar.cabello);
+                                }),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloCuatro,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloCuatro,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDeCabello(
+                                      avatar._indiceColorDeCabello,
+                                      avatar.cabello);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloCinco,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloCinco,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDeCabello(
+                                      avatar._indiceColorDeCabello,
+                                      avatar.cabello);
+                                }),
+                            GestureDetector(
+                              child: Card(
+                                child: Image.asset(
+                                  'assets/inicial/Coming_Soon.png',
+                                  height: _indiceTamanoProximamenteVertical,
+                                  width: _indiceTamanoProximamenteHorizontal,
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosUno,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosUno,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeOjos(
-                                              avatar.indiceTipoDeOjos,
-                                              avatar.ojos);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosDos,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosDos,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeOjos(
-                                              avatar.indiceTipoDeOjos,
-                                              avatar.ojos);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosTres,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosTres,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeOjos(
-                                              avatar.indiceTipoDeOjos,
-                                              avatar.ojos);
-                                        })
-                                  ],
-                                ),
-                              ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    // Selección de peinados especiales.
+                    ListView(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Icon(Icons.chevron_left),
+                            Text(
+                              'Peinados especiales',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            // Página de selección del color de ojos.
-                            ListView(
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Icon(Icons.chevron_left),
-                                    Text(
-                                      'Color de ojos',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Icon(Icons.chevron_right),
-                                  ],
+                            Icon(Icons.chevron_right),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloSiete,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloSiete,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloOcho,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloOcho,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloNueve,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloNueve,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloDiez,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloDiez,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloOnce,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloOnce,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloDoce,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloDoce,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloTrece,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloTrece,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloCatorce,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloCatorce,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloQuince,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloQuince,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabello16,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabello16,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabello17,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabello17,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabello18,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabello18,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabello19,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabello19,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabello20,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabello20,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabello21,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabello21,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabello22,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasUno,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabello22,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCabello(
+                                      avatar.indiceTipoDeCabello,
+                                      avatar.cabello);
+                                }),
+                            GestureDetector(
+                              child: Card(
+                                child: Image.asset(
+                                  'assets/inicial/Coming_Soon.png',
+                                  height: _indiceTamanoProximamenteVertical,
+                                  width: _indiceTamanoProximamenteHorizontal,
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosUno,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosUno,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDeOjos(
-                                              avatar._indiceColorDeOjos,
-                                              avatar.ojos);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosDos,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosDos,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDeOjos(
-                                              avatar._indiceColorDeOjos,
-                                              avatar.ojos);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosTres,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosTres,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDeOjos(
-                                              avatar._indiceColorDeOjos,
-                                              avatar.ojos);
-                                        }),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosCuatro,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosCuatro,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDeOjos(
-                                              avatar._indiceColorDeOjos,
-                                              avatar.ojos);
-                                        }),
-                                    GestureDetector(
-                                      child: Card(
-                                        child: Image.asset(
-                                          'assets/inicial/Coming_Soon.png',
-                                          width: 100.0,
-                                          height: 100.0,
-                                        ),
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      child: Card(
-                                        child: Image.asset(
-                                          'assets/inicial/Coming_Soon.png',
-                                          width: 100.0,
-                                          height: 100.0,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
+                              ),
                             ),
-                            // Página de selección del tipo de nariz.
-                            ListView(
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Icon(Icons.chevron_left),
-                                    Text(
-                                      'Tipo de nariz',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Icon(Icons.chevron_right),
-                                  ],
+                            GestureDetector(
+                              child: Card(
+                                child: Image.asset(
+                                  'assets/inicial/Coming_Soon.png',
+                                  height: _indiceTamanoProximamenteVertical,
+                                  width: _indiceTamanoProximamenteHorizontal,
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizUno,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizUno,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeNariz(
-                                              avatar.indiceTipoDeNariz,
-                                              avatar.nariz);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizDos,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizDos,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeNariz(
-                                              avatar.indiceTipoDeNariz,
-                                              avatar.nariz);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizTres,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizTres,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeNariz(
-                                              avatar.indiceTipoDeNariz,
-                                              avatar.nariz);
-                                        })
-                                  ],
-                                ),
-                              ],
-                            ),
-                            // Página de selección del tipo de boca.
-                            ListView(
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Icon(Icons.chevron_left),
-                                    Text(
-                                      'Tipo de boca',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Icon(Icons.chevron_right),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaUno,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaUno,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeBoca(
-                                              avatar.indiceTipoDeBoca,
-                                              avatar.boca);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaDos,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaDos,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeBoca(
-                                              avatar.indiceTipoDeBoca,
-                                              avatar.boca);
-                                        }),
-                                    GestureDetector(
-                                      child: Card(
-                                        child: Image.asset(
-                                          'assets/inicial/Coming_Soon.png',
-                                          width: 100.0,
-                                          height: 100.0,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                            // Página de selección del vello facial.
-                            ListView(
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Icon(Icons.chevron_left),
-                                    Text(
-                                      'Tipo de vello facial',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Icon(Icons.chevron_right),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaUno,
-                                            _indiceColorDeBarbaSeleccion,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaUno,
-                                              _indiceColorDeBarbaSeleccion,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeBarba(
-                                              avatar.indiceTipoDeBarba,
-                                              avatar.indiceColorDeBarba,
-                                              avatar.barba);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaDos,
-                                            _indiceColorDeBarbaSeleccion,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaDos,
-                                              _indiceColorDeBarbaSeleccion,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeBarba(
-                                              avatar.indiceTipoDeBarba,
-                                              avatar.indiceColorDeBarba,
-                                              avatar.barba);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaTres,
-                                            _indiceColorDeBarbaSeleccion,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaTres,
-                                              _indiceColorDeBarbaSeleccion,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeBarba(
-                                              avatar.indiceTipoDeBarba,
-                                              avatar.indiceColorDeBarba,
-                                              avatar.barba);
-                                        }),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaCuatro,
-                                            _indiceColorDeBarbaSeleccion,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaCuatro,
-                                              _indiceColorDeBarbaSeleccion,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeBarba(
-                                              avatar.indiceTipoDeBarba,
-                                              avatar.indiceColorDeBarba,
-                                              avatar.barba);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaCinco,
-                                            _indiceColorDeBarbaSeleccion,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaCinco,
-                                              _indiceColorDeBarbaSeleccion,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeBarba(
-                                              avatar.indiceTipoDeBarba,
-                                              avatar.indiceColorDeBarba,
-                                              avatar.barba);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaSeis,
-                                            _indiceColorDeBarbaSeleccion,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaSeis,
-                                              _indiceColorDeBarbaSeleccion,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarTipoDeBarba(
-                                              avatar.indiceTipoDeBarba,
-                                              avatar.indiceColorDeBarba,
-                                              avatar.barba);
-                                        }),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            // Página de selección del color vello facial.
-                            ListView(
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Icon(Icons.chevron_left),
-                                    Text(
-                                      'Color de vello facial',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Icon(Icons.chevron_right),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaUno,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaUno,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDeBarba(
-                                              avatar.indiceTipoDeBarba,
-                                              avatar.indiceColorDeBarba,
-                                              avatar.barba);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaDos,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaDos,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDeBarba(
-                                              avatar.indiceTipoDeBarba,
-                                              avatar.indiceColorDeBarba,
-                                              avatar.barba);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaTres,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaTres,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDeBarba(
-                                              avatar.indiceTipoDeBarba,
-                                              avatar.indiceColorDeBarba,
-                                              avatar.barba);
-                                        }),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaCuatro,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaCuatro,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDeBarba(
-                                              avatar.indiceTipoDeBarba,
-                                              avatar.indiceColorDeBarba,
-                                              avatar.barba);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaCinco,
-                                            _indiceColorDePlayeraAvatarActual)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaCinco,
-                                              _indiceColorDePlayeraAvatarActual);
-                                          _editarColorDeBarba(
-                                              avatar.indiceTipoDeBarba,
-                                              avatar.indiceColorDeBarba,
-                                              avatar.barba);
-                                        }),
-                                    GestureDetector(
-                                      child: Card(
-                                        child: Image.asset(
-                                          'assets/inicial/Coming_Soon.png',
-                                          width: 100.0,
-                                          height: 100.0,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                            // Página de selección del color de playera.
-                            ListView(
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Icon(Icons.chevron_left),
-                                    Text(
-                                      'Color de playera',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Icon(Icons.chevron_right),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraUno)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraUno);
-                                          _editarColorDePlayera(
-                                              avatar.indiceColorDePlayera,
-                                              avatar.playera);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraDos)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraDos);
-                                          _editarColorDePlayera(
-                                              avatar.indiceColorDePlayera,
-                                              avatar.playera);
-                                        }),
-                                    GestureDetector(
-                                        child: AvatarSeleccion(CreaAvatar(
-                                            _generoAvatarActual,
-                                            _indiceDeColorDePielAvatarActual,
-                                            _indiceColorDeTroncoAvatarActual,
-                                            _indiceTipoDeCaraAvatarActual,
-                                            _indiceColorDeCaraAvatarActual,
-                                            _indiceTipoDeOrejasAvatarActual,
-                                            _indiceColorDeOrejasAvatarActual,
-                                            _indiceTipoDeCabelloAvatarActual,
-                                            _indiceColorDeCabelloAvatarActual,
-                                            _indiceTipoDeCejasAvatarActual,
-                                            _indiceColorDeCejasAvatarActual,
-                                            _indiceTipoDeOjosAvatarActual,
-                                            _indiceColorDeOjosAvatarActual,
-                                            _indiceTipoDeNarizAvatarActual,
-                                            _indiceTipoDeBocaAvatarActual,
-                                            _indiceTipoDeBarbaAvatarActual,
-                                            _indiceColorDeBarbaAvatarActual,
-                                            _indiceColorDePlayeraTres)),
-                                        onTap: () {
-                                          CreaAvatar avatar = CreaAvatar(
-                                              _generoAvatarActual,
-                                              _indiceDeColorDePielAvatarActual,
-                                              _indiceColorDeTroncoAvatarActual,
-                                              _indiceTipoDeCaraAvatarActual,
-                                              _indiceColorDeCaraAvatarActual,
-                                              _indiceTipoDeOrejasAvatarActual,
-                                              _indiceColorDeOrejasAvatarActual,
-                                              _indiceTipoDeCabelloAvatarActual,
-                                              _indiceColorDeCabelloAvatarActual,
-                                              _indiceTipoDeCejasAvatarActual,
-                                              _indiceColorDeCejasAvatarActual,
-                                              _indiceTipoDeOjosAvatarActual,
-                                              _indiceColorDeOjosAvatarActual,
-                                              _indiceTipoDeNarizAvatarActual,
-                                              _indiceTipoDeBocaAvatarActual,
-                                              _indiceTipoDeBarbaAvatarActual,
-                                              _indiceColorDeBarbaAvatarActual,
-                                              _indiceColorDePlayeraTres);
-                                          _editarColorDePlayera(
-                                              avatar.indiceColorDePlayera,
-                                              avatar.playera);
-                                        }),
-                                  ],
-                                )
-                              ],
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ],
-        ),
+                      ],
+                    ),
+                    // Página de selección del tipo de cejas.
+                    ListView(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Icon(Icons.chevron_left),
+                            Text(
+                              'Tipo de cejas',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Icon(Icons.chevron_right),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasUno,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasUno,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCejas(
+                                      avatar._indiceTipoDeCejas,
+                                      avatar.cejas);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasDos,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasDos,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCejas(
+                                      avatar._indiceTipoDeCejas,
+                                      avatar.cejas);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasTres,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasTres,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCejas(
+                                      avatar._indiceTipoDeCejas,
+                                      avatar.cejas);
+                                }),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasCuatro,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasCuatro,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCejas(
+                                      avatar._indiceTipoDeCejas,
+                                      avatar.cejas);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasCinco,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasCinco,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeCejas(
+                                      avatar._indiceTipoDeCejas,
+                                      avatar.cejas);
+                                }),
+                            GestureDetector(
+                              child: Card(
+                                child: Image.asset(
+                                  'assets/inicial/Coming_Soon.png',
+                                  height: _indiceTamanoProximamenteVertical,
+                                  width: _indiceTamanoProximamenteHorizontal,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    // Página de selección del color de cejas.
+                    ListView(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Icon(Icons.chevron_left),
+                            Text(
+                              'Color de cejas',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Icon(Icons.chevron_right),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasUno,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasUno,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDeCejas(
+                                      avatar._indiceColorDeCejas,
+                                      avatar.cejas);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasDos,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasDos,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDeCejas(
+                                      avatar._indiceColorDeCejas,
+                                      avatar.cejas);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasTres,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasTres,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDeCejas(
+                                      avatar._indiceColorDeCejas,
+                                      avatar.cejas);
+                                }),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasCuatro,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasCuatro,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDeCejas(
+                                      avatar._indiceColorDeCejas,
+                                      avatar.cejas);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasCinco,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasCinco,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDeCejas(
+                                      avatar._indiceColorDeCejas,
+                                      avatar.cejas);
+                                }),
+                            GestureDetector(
+                              child: Card(
+                                child: Image.asset(
+                                  'assets/inicial/Coming_Soon.png',
+                                  height: _indiceTamanoProximamenteVertical,
+                                  width: _indiceTamanoProximamenteHorizontal,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    // Página de selección del tipo de ojos.
+                    ListView(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Icon(Icons.chevron_left),
+                            Text(
+                              'Tipo de ojos',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Icon(Icons.chevron_right),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosUno,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosUno,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeOjos(
+                                      avatar.indiceTipoDeOjos,
+                                      avatar.ojos);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosDos,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosDos,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeOjos(
+                                      avatar.indiceTipoDeOjos,
+                                      avatar.ojos);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosTres,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosTres,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeOjos(
+                                      avatar.indiceTipoDeOjos,
+                                      avatar.ojos);
+                                })
+                          ],
+                        ),
+                      ],
+                    ),
+                    // Página de selección del color de ojos.
+                    ListView(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Icon(Icons.chevron_left),
+                            Text(
+                              'Color de ojos',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Icon(Icons.chevron_right),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosUno,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosUno,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDeOjos(
+                                      avatar._indiceColorDeOjos,
+                                      avatar.ojos);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosDos,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosDos,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDeOjos(
+                                      avatar._indiceColorDeOjos,
+                                      avatar.ojos);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosTres,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosTres,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDeOjos(
+                                      avatar._indiceColorDeOjos,
+                                      avatar.ojos);
+                                }),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosCuatro,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosCuatro,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDeOjos(
+                                      avatar._indiceColorDeOjos,
+                                      avatar.ojos);
+                                }),
+                            GestureDetector(
+                              child: Card(
+                                child: Image.asset(
+                                  'assets/inicial/Coming_Soon.png',
+                                  height: _indiceTamanoProximamenteVertical,
+                                  width: _indiceTamanoProximamenteHorizontal,
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              child: Card(
+                                child: Image.asset(
+                                  'assets/inicial/Coming_Soon.png',
+                                  height: _indiceTamanoProximamenteVertical,
+                                  width: _indiceTamanoProximamenteHorizontal,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    // Página de selección del tipo de nariz.
+                    ListView(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Icon(Icons.chevron_left),
+                            Text(
+                              'Tipo de nariz',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Icon(Icons.chevron_right),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizUno,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizUno,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeNariz(
+                                      avatar.indiceTipoDeNariz,
+                                      avatar.nariz);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizDos,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizDos,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeNariz(
+                                      avatar.indiceTipoDeNariz,
+                                      avatar.nariz);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizTres,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizTres,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeNariz(
+                                      avatar.indiceTipoDeNariz,
+                                      avatar.nariz);
+                                })
+                          ],
+                        ),
+                      ],
+                    ),
+                    // Página de selección del tipo de boca.
+                    ListView(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Icon(Icons.chevron_left),
+                            Text(
+                              'Tipo de boca',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Icon(Icons.chevron_right),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaUno,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaUno,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeBoca(
+                                      avatar.indiceTipoDeBoca,
+                                      avatar.boca);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaDos,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaDos,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeBoca(
+                                      avatar.indiceTipoDeBoca,
+                                      avatar.boca);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaTres,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaTres,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeBoca(
+                                      avatar.indiceTipoDeBoca,
+                                      avatar.boca);
+                                })
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaCuatro,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaCuatro,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeBoca(
+                                      avatar.indiceTipoDeBoca,
+                                      avatar.boca);
+                                }),
+                            GestureDetector(
+                              child: Card(
+                                child: Image.asset(
+                                  'assets/inicial/Coming_Soon.png',
+                                  height: _indiceTamanoProximamenteVertical,
+                                  width: _indiceTamanoProximamenteHorizontal,
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              child: Card(
+                                child: Image.asset(
+                                  'assets/inicial/Coming_Soon.png',
+                                  height: _indiceTamanoProximamenteVertical,
+                                  width: _indiceTamanoProximamenteHorizontal,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    // Página de selección del vello facial.
+                    ListView(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Icon(Icons.chevron_left),
+                            Text(
+                              'Tipo de vello facial',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Icon(Icons.chevron_right),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaUno,
+                                    _indiceColorDeBarbaSeleccion,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaUno,
+                                      _indiceColorDeBarbaSeleccion,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeBarba(
+                                      avatar.indiceTipoDeBarba,
+                                      avatar.indiceColorDeBarba,
+                                      avatar.barba);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaDos,
+                                    _indiceColorDeBarbaSeleccion,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaDos,
+                                      _indiceColorDeBarbaSeleccion,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeBarba(
+                                      avatar.indiceTipoDeBarba,
+                                      avatar.indiceColorDeBarba,
+                                      avatar.barba);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaTres,
+                                    _indiceColorDeBarbaSeleccion,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaTres,
+                                      _indiceColorDeBarbaSeleccion,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeBarba(
+                                      avatar.indiceTipoDeBarba,
+                                      avatar.indiceColorDeBarba,
+                                      avatar.barba);
+                                }),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaCuatro,
+                                    _indiceColorDeBarbaSeleccion,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaCuatro,
+                                      _indiceColorDeBarbaSeleccion,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeBarba(
+                                      avatar.indiceTipoDeBarba,
+                                      avatar.indiceColorDeBarba,
+                                      avatar.barba);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaCinco,
+                                    _indiceColorDeBarbaSeleccion,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaCinco,
+                                      _indiceColorDeBarbaSeleccion,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeBarba(
+                                      avatar.indiceTipoDeBarba,
+                                      avatar.indiceColorDeBarba,
+                                      avatar.barba);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaSeis,
+                                    _indiceColorDeBarbaSeleccion,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaSeis,
+                                      _indiceColorDeBarbaSeleccion,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarTipoDeBarba(
+                                      avatar.indiceTipoDeBarba,
+                                      avatar.indiceColorDeBarba,
+                                      avatar.barba);
+                                }),
+                          ],
+                        ),
+                      ],
+                    ),
+                    // Página de selección del color vello facial.
+                    ListView(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Icon(Icons.chevron_left),
+                            Text(
+                              'Color de vello facial',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Icon(Icons.chevron_right),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaUno,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaUno,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDeBarba(
+                                      avatar.indiceTipoDeBarba,
+                                      avatar.indiceColorDeBarba,
+                                      avatar.barba);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaDos,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaDos,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDeBarba(
+                                      avatar.indiceTipoDeBarba,
+                                      avatar.indiceColorDeBarba,
+                                      avatar.barba);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaTres,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaTres,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDeBarba(
+                                      avatar.indiceTipoDeBarba,
+                                      avatar.indiceColorDeBarba,
+                                      avatar.barba);
+                                }),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaCuatro,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaCuatro,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDeBarba(
+                                      avatar.indiceTipoDeBarba,
+                                      avatar.indiceColorDeBarba,
+                                      avatar.barba);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaCinco,
+                                    _indiceColorDePlayeraAvatarActual)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaCinco,
+                                      _indiceColorDePlayeraAvatarActual);
+                                  _editarColorDeBarba(
+                                      avatar.indiceTipoDeBarba,
+                                      avatar.indiceColorDeBarba,
+                                      avatar.barba);
+                                }),
+                            GestureDetector(
+                              child: Card(
+                                child: Image.asset(
+                                  'assets/inicial/Coming_Soon.png',
+                                  height: _indiceTamanoProximamenteVertical,
+                                  width: _indiceTamanoProximamenteHorizontal,
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                    // Página de selección del color de playera.
+                    ListView(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Icon(Icons.chevron_left),
+                            Text(
+                              'Color de playera',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Icon(Icons.chevron_right),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraUno)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraUno);
+                                  _editarColorDePlayera(
+                                      avatar.indiceColorDePlayera,
+                                      avatar.playera);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraDos)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraDos);
+                                  _editarColorDePlayera(
+                                      avatar.indiceColorDePlayera,
+                                      avatar.playera);
+                                }),
+                            GestureDetector(
+                                child: AvatarSeleccion(CreaAvatar(
+                                    _generoAvatarActual,
+                                    _indiceDeColorDePielAvatarActual,
+                                    _indiceColorDeTroncoAvatarActual,
+                                    _indiceTipoDeCaraAvatarActual,
+                                    _indiceColorDeCaraAvatarActual,
+                                    _indiceTipoDeOrejasAvatarActual,
+                                    _indiceColorDeOrejasAvatarActual,
+                                    _indiceTipoDeCabelloAvatarActual,
+                                    _indiceColorDeCabelloAvatarActual,
+                                    _indiceTipoDeCejasAvatarActual,
+                                    _indiceColorDeCejasAvatarActual,
+                                    _indiceTipoDeOjosAvatarActual,
+                                    _indiceColorDeOjosAvatarActual,
+                                    _indiceTipoDeNarizAvatarActual,
+                                    _indiceTipoDeBocaAvatarActual,
+                                    _indiceTipoDeBarbaAvatarActual,
+                                    _indiceColorDeBarbaAvatarActual,
+                                    _indiceColorDePlayeraTres)),
+                                onTap: () {
+                                  CreaAvatar avatar = CreaAvatar(
+                                      _generoAvatarActual,
+                                      _indiceDeColorDePielAvatarActual,
+                                      _indiceColorDeTroncoAvatarActual,
+                                      _indiceTipoDeCaraAvatarActual,
+                                      _indiceColorDeCaraAvatarActual,
+                                      _indiceTipoDeOrejasAvatarActual,
+                                      _indiceColorDeOrejasAvatarActual,
+                                      _indiceTipoDeCabelloAvatarActual,
+                                      _indiceColorDeCabelloAvatarActual,
+                                      _indiceTipoDeCejasAvatarActual,
+                                      _indiceColorDeCejasAvatarActual,
+                                      _indiceTipoDeOjosAvatarActual,
+                                      _indiceColorDeOjosAvatarActual,
+                                      _indiceTipoDeNarizAvatarActual,
+                                      _indiceTipoDeBocaAvatarActual,
+                                      _indiceTipoDeBarbaAvatarActual,
+                                      _indiceColorDeBarbaAvatarActual,
+                                      _indiceColorDePlayeraTres);
+                                  _editarColorDePlayera(
+                                      avatar.indiceColorDePlayera,
+                                      avatar.playera);
+                                }),
+                          ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -4763,8 +4875,10 @@ class CreaAvatar {
       this._indiceDeColorDePiel = indiceDeColorDePiel;
       this._tronco = _defineTroncoMujer(this._indiceDeColorDePiel);
       this._cara = _defineCaraMujer(indiceTipoDeCara, indiceColorDeCara);
-      this._orejas = _defineOrejasMujer(indiceTipoDeOrejas, indiceColorDeOrejas);
-      this._cabello = _defineCabelloMujer(indiceTipoDeCabello, indiceColorDeCabello);
+      this._orejas =
+          _defineOrejasMujer(indiceTipoDeOrejas, indiceColorDeOrejas);
+      this._cabello =
+          _defineCabelloMujer(indiceTipoDeCabello, indiceColorDeCabello);
       this._cejas = _defineCejasMujer(indiceTipoDeCejas, indiceColorDeCejas);
       this._ojos = _defineOjosMujer(indiceTipoDeOjos, indiceColorDeOjos);
       this._nariz = _defineNarizMujer(indiceTipoDeNariz);
@@ -4953,7 +5067,7 @@ class CreaAvatar {
     this._indiceTipoDeCabello = indiceTipo;
     this._indiceColorDeCabello = indiceColor;
     // Validación de error.
-    if (this._indiceTipoDeCabello <= 0 || this._indiceColorDeCabello >= 6) {
+    if (this._indiceTipoDeCabello <= 0 || this._indiceColorDeCabello > 23) {
       return 'assets/inicial/Sin_Fondo.png';
     }
     // Validaciones para el cabello tipo 1 con los 5 colores de cabello.
@@ -5020,61 +5134,112 @@ class CreaAvatar {
     if (this._indiceTipoDeCabello == 4 && this._indiceColorDeCabello == 5) {
       return 'assets/peinados/peinado_D/Peinado_DE.png';
     }
-    switch(this._indiceTipoDeCabello) {
+    // Validaciones para el cabello tipo 5 con los 5 colores de cabello.
+    if (this._indiceTipoDeCabello == 5 && this._indiceColorDeCabello == 1) {
+      return 'assets/peinados/peinado_E/Especial_EA.png';
+    }
+    if (this._indiceTipoDeCabello == 5 && this._indiceColorDeCabello == 2) {
+      return 'assets/peinados/peinado_E/Especial_EB.png';
+    }
+    if (this._indiceTipoDeCabello == 5 && this._indiceColorDeCabello == 3) {
+      return 'assets/peinados/peinado_E/Especial_EC.png';
+    }
+    if (this._indiceTipoDeCabello == 5 && this._indiceColorDeCabello == 4) {
+      return 'assets/peinados/peinado_E/Especial_ED.png';
+    }
+    if (this._indiceTipoDeCabello == 5 && this._indiceColorDeCabello == 5) {
+      return 'assets/peinados/peinado_E/Especial_EE.png';
+    }
+    switch (this._indiceTipoDeCabello) {
       case 6: {
-        return 'assets/peinados_especiales/Especial_AA.png';
-      } break;
-      case 7: {
-        return 'assets/peinados_especiales/Especial_AB.png';
-      } break;
-      case 8: {
-        return 'assets/peinados_especiales/Especial_AC.png';
-      } break;
-      case 9: {
-        return 'assets/peinados_especiales/Especial_AD.png';
-      } break;
-      case 10: {
-        return 'assets/peinados_especiales/Especial_AE.png';
-      } break;
-      case 11: {
-        return 'assets/peinados_especiales/Especial_AF.png';
-      } break;
-      case 12: {
-        return 'assets/peinados_especiales/Especial_AG.png';
-      } break;
-      case 13: {
-        return 'assets/peinados_especiales/Especial_BA.png';
-      } break;
-      case 14: {
-        return 'assets/peinados_especiales/Especial_BB.png';
-      } break;
-      case 15: {
-        return 'assets/peinados_especiales/Especial_BC.png';
-      } break;
-      case 16: {
-        return 'assets/peinados_especiales/Especial_BD.png';
-      } break;
-      case 17: {
-        return 'assets/peinados_especiales/Especial_BE.png';
-      } break;
-      case 18: {
-        return 'assets/peinados_especiales/Especial_LBA.png';
-      } break;
-      case 19: {
-        return 'assets/peinados_especiales/Especial_LBB.png';
-      } break;
-      case 20: {
-        return 'assets/peinados_especiales/Especial_LBC.png';
-      } break;
-      case 21: {
-        return 'assets/peinados_especiales/Especial_LBD.png';
-      } break;
-      case 22: {
-        return 'assets/peinados_especiales/Especial_LBE.png';
-      } break;
-      default: {
         return 'assets/inicial/Sin_Fondo.png';
-      } break;
+      }
+      break;
+      case 7:
+        {
+          return 'assets/peinados_especiales/Especial_AB.png';
+        }
+        break;
+      case 8:
+        {
+          return 'assets/peinados_especiales/Especial_AC.png';
+        }
+        break;
+      case 9:
+        {
+          return 'assets/peinados_especiales/Especial_AD.png';
+        }
+        break;
+      case 10:
+        {
+          return 'assets/peinados_especiales/Especial_AE.png';
+        }
+        break;
+      case 11:
+        {
+          return 'assets/peinados_especiales/Especial_AF.png';
+        }
+        break;
+      case 12:
+        {
+          return 'assets/peinados_especiales/Especial_AG.png';
+        }
+        break;
+      case 13:
+        {
+          return 'assets/peinados_especiales/Especial_BA.png';
+        }
+        break;
+      case 14:
+        {
+          return 'assets/peinados_especiales/Especial_BB.png';
+        }
+        break;
+      case 15:
+        {
+          return 'assets/peinados_especiales/Especial_BC.png';
+        }
+        break;
+      case 16:
+        {
+          return 'assets/peinados_especiales/Especial_BD.png';
+        }
+        break;
+      case 17:
+        {
+          return 'assets/peinados_especiales/Especial_BE.png';
+        }
+        break;
+      case 18:
+        {
+          return 'assets/peinados_especiales/Especial_LBA.png';
+        }
+        break;
+      case 19:
+        {
+          return 'assets/peinados_especiales/Especial_LBB.png';
+        }
+        break;
+      case 20:
+        {
+          return 'assets/peinados_especiales/Especial_LBC.png';
+        }
+        break;
+      case 21:
+        {
+          return 'assets/peinados_especiales/Especial_LBD.png';
+        }
+        break;
+      case 22:
+        {
+          return 'assets/peinados_especiales/Especial_LBE.png';
+        }
+        break;
+      default:
+        {
+          return 'assets/inicial/Sin_Fondo.png';
+        }
+        break;
     }
   }
 
@@ -5242,6 +5407,16 @@ class CreaAvatar {
           return 'assets/bocas/Boca_B.png';
         }
         break;
+      case 3:
+        {
+          return 'assets/bocas/Boca_C.png';
+        }
+        break;
+      case 4:
+        {
+          return 'assets/bocas/Boca_D.png';
+        }
+        break;
       default:
         {
           return 'assets/inicial/Sin_Fondo.png';
@@ -5371,30 +5546,55 @@ class CreaAvatar {
   String _defineCaraMujer(int indiceTipo, int indiceColor) {
     this._indiceTipoDeCara = indiceTipo;
     this._indiceColorDeCara = indiceColor;
-    // Validación de error.
-    if(this._indiceTipoDeCara == 2) {
-      this._indiceTipoDeCara = 1;
-    }
-    if(this._indiceTipoDeCara == 3) {
-      this._indiceTipoDeCara = 1;
-    }
     if (this._indiceTipoDeCara <= 0 || this._indiceDeColorDePiel >= 6) {
       return 'assets/inicial/Sin_Fondo.png';
     }
     // Validaciones para la cara tipo 1 con los 5 colores de piel.
     if (this._indiceTipoDeCara == 1 && this._indiceDeColorDePiel == 1) {
-      return 'assets/mujer/caras/cara_C/Cara_CA.png';
+      return 'assets/mujer/caras/cara_A/Cara_AA.png';
     }
     if (this._indiceTipoDeCara == 1 && this._indiceDeColorDePiel == 2) {
-      return 'assets/mujer/caras/cara_C/Cara_CB.png';
+      return 'assets/mujer/caras/cara_A/Cara_AB.png';
     }
     if (this._indiceTipoDeCara == 1 && this._indiceDeColorDePiel == 3) {
-      return 'assets/mujer/caras/cara_C/Cara_CC.png';
+      return 'assets/mujer/caras/cara_A/Cara_AC.png';
     }
     if (this._indiceTipoDeCara == 1 && this._indiceDeColorDePiel == 4) {
-      return 'assets/mujer/caras/cara_C/Cara_CD.png';
+      return 'assets/mujer/caras/cara_A/Cara_AD.png';
     }
     if (this._indiceTipoDeCara == 1 && this._indiceDeColorDePiel == 5) {
+      return 'assets/mujer/caras/cara_A/Cara_AE.png';
+    }
+    // Validaciones para la cara tipo 2 con los 5 colores de piel.
+    if (this._indiceTipoDeCara == 2 && this._indiceDeColorDePiel == 1) {
+      return 'assets/mujer/caras/cara_B/Cara_BA.png';
+    }
+    if (this._indiceTipoDeCara == 2 && this._indiceDeColorDePiel == 2) {
+      return 'assets/mujer/caras/cara_B/Cara_BB.png';
+    }
+    if (this._indiceTipoDeCara == 2 && this._indiceDeColorDePiel == 3) {
+      return 'assets/mujer/caras/cara_B/Cara_BC.png';
+    }
+    if (this._indiceTipoDeCara == 2 && this._indiceDeColorDePiel == 4) {
+      return 'assets/mujer/caras/cara_B/Cara_BD.png';
+    }
+    if (this._indiceTipoDeCara == 2 && this._indiceDeColorDePiel == 5) {
+      return 'assets/mujer/caras/cara_B/Cara_BE.png';
+    }
+    // Validaciones para la cara tipo 3 con los 5 colores de piel.
+    if (this._indiceTipoDeCara == 3 && this._indiceDeColorDePiel == 1) {
+      return 'assets/mujer/caras/cara_C/Cara_CA.png';
+    }
+    if (this._indiceTipoDeCara == 3 && this._indiceDeColorDePiel == 2) {
+      return 'assets/mujer/caras/cara_C/Cara_CB.png';
+    }
+    if (this._indiceTipoDeCara == 3 && this._indiceDeColorDePiel == 3) {
+      return 'assets/mujer/caras/cara_C/Cara_CC.png';
+    }
+    if (this._indiceTipoDeCara == 3 && this._indiceDeColorDePiel == 4) {
+      return 'assets/mujer/caras/cara_C/Cara_CD.png';
+    }
+    if (this._indiceTipoDeCara == 3 && this._indiceDeColorDePiel == 5) {
       return 'assets/mujer/caras/cara_C/Cara_CE.png';
     }
   }
@@ -5520,7 +5720,10 @@ class CreaAvatar {
     this._indiceTipoDeCabello = indiceTipo;
     this._indiceColorDeCabello = indiceColor;
     // Validación de error.
-    if (this._indiceTipoDeCabello <= 0 || this._indiceColorDeCabello >= 7) {
+    if(this._indiceTipoDeCabello == 20) {
+      this._indiceTipoDeCabello = 20;
+    }
+    if (this._indiceTipoDeCabello <= 0 || this._indiceColorDeCabello > 23) {
       return 'assets/inicial/Sin_Fondo.png';
     }
     // Validaciones para el cabello tipo 1 con los 5 colores de cabello.
@@ -5603,61 +5806,97 @@ class CreaAvatar {
     if (this._indiceTipoDeCabello == 5 && this._indiceColorDeCabello == 5) {
       return 'assets/mujer/peinados/peinado_E/Peinado_EE.png';
     }
-    switch(this._indiceTipoDeCabello) {
-      case 6: {
-        return 'assets/inicial/Sin_Fondo.png';
-      } break;
-      case 7: {
-        return 'assets/inicial/Sin_Fondo.png';
-      } break;
-      case 8: {
-        return 'assets/inicial/Sin_Fondo.png';
-      } break;
-      case 9: {
-        return 'assets/inicial/Sin_Fondo.png';
-      } break;
-      case 10: {
-        return 'assets/inicial/Sin_Fondo.png';
-      } break;
-      case 11: {
-        return 'assets/inicial/Sin_Fondo.png';
-      } break;
-      case 12: {
-        return 'assets/inicial/Sin_Fondo.png';
-      } break;
-      case 13: {
-        return 'assets/inicial/Sin_Fondo.png';
-      } break;
-      case 14: {
-        return 'assets/inicial/Sin_Fondo.png';
-      } break;
-      case 15: {
-        return 'assets/inicial/Sin_Fondo.png';
-      } break;
-      case 16: {
-        return 'assets/inicial/Sin_Fondo.png';
-      } break;
-      case 17: {
-        return 'assets/inicial/Sin_Fondo.png';
-      } break;
-      case 18: {
-        return 'assets/inicial/Sin_Fondo.png';
-      } break;
-      case 19: {
-        return 'assets/inicial/Sin_Fondo.png';
-      } break;
-      case 20: {
-        return 'assets/inicial/Sin_Fondo.png';
-      } break;
-      case 21: {
-        return 'assets/inicial/Sin_Fondo.png';
-      } break;
-      case 22: {
-        return 'assets/inicial/Sin_Fondo.png';
-      } break;
-      default: {
-        return 'assets/inicial/Sin_Fondo.png';
-      } break;
+    switch (this._indiceTipoDeCabello) {
+      case 6:
+        {
+          return 'assets/inicial/Sin_Fondo.png';
+        }
+        break;
+      case 7:
+        {
+          return 'assets/peinados_chidos_mujeres/Peinado_01.png';
+        }
+        break;
+      case 8:
+        {
+          return 'assets/peinados_chidos_mujeres/Peinado_02.png';
+        }
+        break;
+      case 9:
+        {
+          return 'assets/peinados_chidos_mujeres/Peinado_03.png';
+        }
+        break;
+      case 10:
+        {
+          return 'assets/peinados_chidos_mujeres/Peinado_04.png';
+        }
+        break;
+      case 11:
+        {
+          return 'assets/peinados_chidos_mujeres/Peinado_06.png';
+        }
+        break;
+      case 12:
+        {
+          return 'assets/peinados_chidos_mujeres/Peinado_07.png';
+        }
+        break;
+      case 13:
+        {
+          return 'assets/peinados_chidos_mujeres/Peinado_08.png';
+        }
+        break;
+      case 14:
+        {
+          return 'assets/peinados_chidos_mujeres/Peinado_09.png';
+        }
+        break;
+      case 15:
+        {
+          return 'assets/peinados_chidos_mujeres/Peinado_12.png';
+        }
+        break;
+      case 16:
+        {
+          return 'assets/peinados_chidos_mujeres/Peinado_13.png';
+        }
+        break;
+      case 17:
+        {
+          return 'assets/peinados_chidos_mujeres/Peinado_14.png';
+        }
+        break;
+      case 18:
+        {
+          return 'assets/peinados_chidos_mujeres/Peinado_15.png';
+        }
+        break;
+      case 19:
+        {
+          return 'assets/peinados_chidos_mujeres/Peinado_16.png';
+        }
+        break;
+      case 20:
+        {
+          return 'assets/peinados_chidos_mujeres/Peinado_17.png';
+        }
+        break;
+      case 21:
+        {
+          return 'assets/peinados_chidos_mujeres/Peinado_19.png';
+        }
+        break;
+      case 22:
+        {
+          return 'assets/peinados_chidos_mujeres/Peinado_20.png';
+        }
+        break;
+      default:
+        {
+          //return 'assets/inicial/Sin_Fondo.png';
+        }
+        break;
     }
   }
 
@@ -5775,21 +6014,21 @@ class CreaAvatar {
     if (this._indiceTipoDeOjos == 2 && this._indiceColorDeOjos == 5) {
       return 'assets/mujer/ojos/ojos_B/Ojos_BE.png';
     }
-    // PENDIENTE Validaciones para los ojos tipo 3 con los 5 colores de ojos.
+    // Validaciones para los ojos tipo 3 con los 5 colores de ojos.
     if (this._indiceTipoDeOjos == 3 && this._indiceColorDeOjos == 1) {
-      return 'assets/mujer/ojos/ojos_A/Ojos_AA.png';
+      return 'assets/mujer/ojos/ojos_C/Ojos_CA.png';
     }
     if (this._indiceTipoDeOjos == 3 && this._indiceColorDeOjos == 2) {
-      return 'assets/mujer/ojos/ojos_A/Ojos_AB.png';
+      return 'assets/mujer/ojos/ojos_C/Ojos_CB.png';
     }
     if (this._indiceTipoDeOjos == 3 && this._indiceColorDeOjos == 3) {
-      return 'assets/mujer/ojos/ojos_A/Ojos_AC.png';
+      return 'assets/mujer/ojos/ojos_C/Ojos_CC.png';
     }
     if (this._indiceTipoDeOjos == 3 && this._indiceColorDeOjos == 4) {
-      return 'assets/mujer/ojos/ojos_A/Ojos_AD.png';
+      return 'assets/mujer/ojos/ojos_C/Ojos_CD.png';
     }
     if (this._indiceTipoDeOjos == 3 && this._indiceColorDeOjos == 5) {
-      return 'assets/mujer/ojos/ojos_A/Ojos_AE.png';
+      return 'assets/mujer/ojos/ojos_C/Ojos_CE.png';
     }
   }
 
@@ -5832,6 +6071,16 @@ class CreaAvatar {
       case 2:
         {
           return 'assets/mujer/bocas/Boca_B.png';
+        }
+        break;
+      case 3:
+        {
+          return 'assets/mujer/bocas/Boca_C.png';
+        }
+        break;
+      case 4:
+        {
+          return 'assets/mujer/bocas/Boca_D.png';
         }
         break;
       default:
@@ -5963,6 +6212,8 @@ class AvatarSeleccion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    double _alto = 120.0;
+    double _ancho = 120.0;
     return Card(
       child: Stack(
         children: <Widget>[
@@ -5970,80 +6221,80 @@ class AvatarSeleccion extends StatelessWidget {
           Positioned(
             child: Image.asset(
               '$_tronco',
-              width: 130,
-              height: 130,
+              height: _alto,
+              width: _ancho,
             ),
           ),
           // Cara
           Positioned(
             child: Image.asset(
               '$_cara',
-              width: 130,
-              height: 130,
+              height: _alto,
+              width: _ancho,
             ),
           ),
           // Orejas
           Positioned(
             child: Image.asset(
               '$_orejas',
-              width: 130,
-              height: 130,
+              height: _alto,
+              width: _ancho,
             ),
           ),
           // Cejas
           Positioned(
             child: Image.asset(
               '$_cejas',
-              width: 130,
-              height: 130,
+              height: _alto,
+              width: _ancho,
             ),
           ),
           // Cabello
           Positioned(
             child: Image.asset(
               '$_cabello',
-              width: 130,
-              height: 130,
+              height: _alto,
+              width: _ancho,
             ),
           ),
           // Ojos
           Positioned(
             child: Image.asset(
               '$_ojos',
-              width: 130,
-              height: 130,
+              height: _alto,
+              width: _ancho,
             ),
           ),
           // Nariz
           Positioned(
             child: Image.asset(
               '$_nariz',
-              width: 130,
-              height: 130,
+              height: _alto,
+              width: _ancho,
             ),
           ),
           // Boca
           Positioned(
             child: Image.asset(
               '$_boca',
-              width: 130,
-              height: 130,
+              height: _alto,
+              width: _ancho,
             ),
           ),
           // Vello facial
           Positioned(
             child: Image.asset(
               '$_barba',
-              width: 130,
-              height: 130,
+              height: _alto,
+              width: _ancho,
             ),
           ),
           // Playera
           Positioned(
             child: Image.asset(
               '$_playera',
-              width: 130,
-              height: 130,
+              height: _alto,
+              width: _ancho,
             ),
           ),
         ],
